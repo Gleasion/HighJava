@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	
+	<insert id="insertNotice" parameterType="kr.or.ddit.board.vo.BoardVO">
+		
+<!-- 		Insert into jdbc_board -->
+<!-- 		(board_no, board_title, board_writer, board_date, board_content) -->
+<!-- 		values(board_seq.nextval, #{title}, #{writer}, SYSDATE, #{content}) -->
+		
+		Insert into jdbc_board
+		(board_no, board_writer, board_date, board_title, board_content)
+		values(board_seq.nextval, #{writer}, SYSDATE, #{title}, #{content})
+		
+	</insert>
+	
+	<update id="updateNotice" parameterType="kr.or.ddit.board.vo.BoardVO">
+		
+		update jdbc_board 
+		set
+		board_writer = #{writer}, 
+		board_date = SYSDATE,
+		board_title = #{title}, 
+		board_content = #{content}
+		where board_no = #{boardNo}
+
+	</update>
+	
+	<delete id="deleteNotice" parameterType="kr.or.ddit.board.vo.BoardVO">
+	
+		delete from jdbc_board where board_no = #{boardNo}
+	
+	</delete>
+	
+	<!--	VO 클래스 속성과 테이블의 컬럼 매핑하는 결과 매핑 설정 -->
+	<!-- column = 쿼리속성, property: 자바 객체 -->
+	<resultMap type="kr.or.ddit.board.vo.BoardVO" id="boardMap">
+		<result column="board_no" property="boardNo" />
+		<result column="board_title" property="title" />
+		<result column="board_writer" property="writer" />
+		<result column="board_date" property="writeDate" />
+		<result column="board_content" property="content" />
+	</resultMap>
+
+	<select id="displayAll" resultMap="boardMap">
+	
+		select * from jdbc_board
+	
+	</select>
+
+	<select id="checkBoardNo" parameterType="int" resultType="int">
+	
+		select count(*) as cnt
+		from jdbc_board  
+		where board_no = #{boardNo}
+	
+	</select>
+
+	<select id="checkWriter" parameterType="String" resultType="int">
+	
+		select count(*) as cnt
+		from jdbc_board 
+		where board_writer = #{writer}
+	
+	</select>
+
+	<!-- BoardVO [boardNo=0, writer=, writeDate=null, title=코딩, content=] -->
+	<select id="findNotice" parameterType="hashMap" resultType="kr.or.ddit.board.vo.BoardVO">
+	
+		select board_no as boardNo,
+				board_writer as writer,
+				board_title as title,
+				board_date as writeDate,
+				board_content as content
+		from jdbc_board
+		where 1 = 1
+	<if test='boardNo != 0'>
+		and board_no = #{boardNo}
+	</if>
+	<if test='writer != null and writer != ""'>
+		and board_writer like '%' || #{writer} || '%'
+	</if>
+	<if test='title != null and title != ""'>
+		and board_title like '%' || #{title} || '%'
+	</if>
+	<if test='content != null and content != ""'>
+		and board_content like '%' || #{content} || '%'
+	</if>
+
+	</select>
+	
+	<select id="getBoard" parameterType="int" 
+		resultType="kr.or.ddit.board.vo.BoardVO">
+	
+		select board_no as boardNo,
+				board_writer as writer,
+				board_title as title,
+				board_date as writeDate,
+				board_content as content
+		from jdbc_board
+		where board_no = #{boardNo}
+		
+	</select>
+
+
+	
+</mapper>

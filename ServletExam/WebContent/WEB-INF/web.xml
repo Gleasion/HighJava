@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>ServletExam</display-name>
+
+<filter>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<filter-class>kr.or.ddit.comm.filter.CharacterEncodingFilter</filter-class>
+	<init-param> <!-- 초기값을 설정할 수 있음 , 설정을 안하면 null임 -->
+		<param-name>encoding</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
+<filter-mapping>
+	<filter-name>CharacterEncodingFilter</filter-name>
+	<url-pattern>*.do</url-pattern> <!-- servlet 요청에만 filter 실행하면 됨 -->
+</filter-mapping>
+
+
+
+</web-app>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        #container{
+            border: 10px ridge lightblue;
+            height: 300px;
+            /* .child의 부모 자격을 위해 position 속성 부여 */
+            position: relative;
+            left: 20px;
+            top: 20px;
+        }
+        .child{
+            border: 4px solid brown;
+            border-radius: 24px;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            /* static 기본값, 방향 속성값의 영향을 받지 않음 */
+            /* relative static한 위치로부터 방향속성값을 지정한 상대위치를 결정 */
+            /* absolute - 부모에 따라 그 위치가 결정되며 부모로부터 방향속성값 적용
+                    >> 부모1 (default) 컨테이너(창, 윈도우, 브라우저)의 좌측상단이 기준
+                    >> 부모2 요소의 구조상 부모 단, 부모의 자격(non-static)을 갖춰야함 */
+            /* fixed - 언제든지 고정된 상태 */
+            position: relative;
+            left: 10px;
+            top: 10px;
+        }
+        .m{
+            background: red;
+            z-index: -1;
+        }
+        .d{
+            background: pink;
+            z-index: -1;
+        }
+        .s{
+            background: lightblue;
+            z-index: -1;
+        }
+        .g{
+            background: yellow;
+            z-index: -2;
+        }
+        input{
+            position: relative;
+            left: 30px;
+            top: 360px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="child m">마지</div>
+        <div class="child d">두리</div>
+        <div class="child s">세찌</div>
+        <div class="child g">꽁지</div>
+    </div>
+    <input type="button" value="무브" onclick="f_move()">
+
+<script>
+
+var magi = document.querySelector(".m");
+// var duri = document.querySelector(".d");
+// var seggi = document.querySelector(".s");
+// var ggonggi = document.querySelector(".g");
+var seggi = document.querySelectorAll(".child")[2];
+
+function f_move() {
+   // alert("초기화 전[" + magi.style.left + "]"); //????
+    
+    // 자바스크립트는 동적언어, 자동화(암묵적 변화)를 많이 제공
+    //  - if문의 조건으로 문자열 대입시 boolean으로 자동변환 / 값이 없을 때 false로 인식
+    //  -       조건으로 숫자 대입시 0일때만 false / 나머지(음수 포함)sms true로 인식
+    
+    // 스크립트 상에서 요소의 인라인스타일을 초기화하기
+    if(!magi.style.left){
+        magi.style.left = "10px"; //값의 초기화
+    }
+    
+    alert("초기화 후[" + magi.style.left + "]"); //????
+
+    // 이동 값 추가 세팅
+    // 단위 제거를 위해 parseInt()활용
+    console.log(">>>", magi.style.left);
+    console.log("단위제거 >>>", parseInt(magi.style.left));
+    magi.style.left = parseInt(magi.style.left) + 50 + "px"; //단위 반드시 붙이기
+}
+</script>
+</body>
+</html>

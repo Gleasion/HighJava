@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+
+	<properties resource="db.properties" />
+	
+	<!-- 기본환경을 무엇으로 설정할지 적어줌 -->
+	<environments default="dev">
+		<!--환경을 저장해두고 필요에 따라서 사용할 수 있음  -->
+		<environment id="dev">
+			<transactionManager type="JDBC" />
+			<!-- MyBatis 자체 커넥션 풀을 사용 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+				<!-- 활성화 된 커넥션 수 -->
+				<property name="poolMaximumActiveConnections" value="2"/>
+				<!-- 유휴 상태에서 최대 커넥션 수 -->
+				<property name="poolMaximumIdleConnections" value="2"/>
+			</dataSource>
+		</environment>
+		
+	</environments>
+	
+	<mappers>
+		<mapper resource="mapper/member.xml" />
+	</mappers>
+	
+	
+</configuration>
